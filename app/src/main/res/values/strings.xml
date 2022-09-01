@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Parcial</string>
+
+    <!--    Dropdown items-->
+    <string-array name="operations">
+        <item>Roots</item>
+        <item>Trigonometric relations</item>
+        <item>Raise</item>
+    </string-array>
 </resources>
