@@ -4,16 +4,19 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.Toast
 import androidx.core.content.ContentProviderCompat.requireContext
 import com.google.android.material.textfield.TextInputLayout
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val et = findViewById<AutoCompleteTextView>(R.id.autoCompleteTextView)
+        val dropDownMenu = findViewById<AutoCompleteTextView>(R.id.autoCompleteTextView)
 //        Leer los valores de dos ángulos A y B, con un menú con las siguientes opciones:
 //
 //       * Mostar las Raíces Cuadradas y cúbicas de ambos ángulos
@@ -32,7 +35,16 @@ class MainActivity : AppCompatActivity() {
 
         val operations = resources.getStringArray(R.array.operations)
         val adapter = ArrayAdapter(this, R.layout.list_item, operations)
-        et.setAdapter(adapter)
+        dropDownMenu.setAdapter(adapter)
 
+        dropDownMenu.onItemClickListener = this
+    }
+
+    override fun onItemClick(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
+        val item = parent?.getItemAtPosition(pos).toString()
+
+        when (item) {
+            "Roots" ->
+        }
     }
 }
