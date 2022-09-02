@@ -1,12 +1,12 @@
 package com.innova.parcial
 
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.view.View.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-
 
 
 class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
@@ -38,26 +38,46 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
     }
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
-        var radioGroup = findViewById<RadioGroup>(R.id.radioGroup)
-        var radi = findViewById<RadioButton>(R.id.ra)
-        radi.setTextColor(Color.parseColor("#EB4B29"))
+        val rbSquare = findViewById<RadioButton>(R.id.rbSquare)
+        val rbCubic = findViewById<RadioButton>(R.id.rbCubic)
+        val myRadioButtonList = listOf<RadioButton>(rbSquare, rbCubic)
+
         when (parent?.getItemAtPosition(pos).toString()) {
             "Roots" -> {
-                var numRadioButton = radioGroup.childCount - 1
-                for (i in 0..numRadioButton) {
-                    radioGroup.apply {
-                        getChildAt(i).isClickable= false
-//                        getChildAt(1).setTextColor(Color.parseColor("#EB4B29"))
-//                        getChildAt(0).setBackgroundColor(Color.parseColor("#EB4B29"))
-                    }
-                }
+                activateRadioButtons(myRadioButtonList)
             }
             "Trigonometric relations" -> {
-//                radioGroup.visibility = INVISIBLE
+                disableRadioButtons(myRadioButtonList)
             }
             "Raise" -> {
-//                radioGroup.visibility = INVISIBLE
+                disableRadioButtons(myRadioButtonList)
             }
         }
+    }
+
+    private fun activateRadioButtons(radioButtonList: List<RadioButton>) {
+        radioButtonList.map {
+            it.activate(getColor(R.color.activate_button), getColor(R.color.activate_text))
+        }
+    }
+
+    private fun disableRadioButtons(radioButtonList: List<RadioButton>) {
+        radioButtonList.map {
+            it.isChecked = false
+            it.disable(getColor(R.color.disable))
+        }
+    }
+
+    //    Funciones de extendisón RADIO BUTTON
+    fun RadioButton.disable(colorDisable: Int) {
+        this.isClickable = false
+        this.buttonTintList = ColorStateList.valueOf(colorDisable)
+        this.setTextColor(colorDisable)
+    }
+
+    fun RadioButton.activate(colorButton: Int, colorText: Int) {
+        this.isClickable = true
+        this.buttonTintList = ColorStateList.valueOf(colorButton)
+        this.setTextColor(colorText)
     }
 }

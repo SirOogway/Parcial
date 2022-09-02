@@ -67,19 +67,19 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/menu"
         android:layout_alignEnd="@+id/menu"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal" >
 
         <RadioButton
-            android:id="@+id/ra"
+            android:id="@+id/rbSquare"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Square"/>
 
         <RadioButton
+            android:id="@+id/rbCubic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cubic" />
+            android:text="Cubic"/>
     </RadioGroup>
 
     <Button
