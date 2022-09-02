@@ -61,11 +61,32 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/menu"
+        android:layout_alignEnd="@+id/menu"
+        android:orientation="horizontal"
+        >
+
+        <RadioButton
+            android:id="@+id/ra"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Square"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cubic" />
+    </RadioGroup>
+
     <Button
         android:id="@+id/btnCalculate"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/menu"
+        android:layout_below="@id/radioGroup"
         android:layout_centerHorizontal="true"
         android:layout_margin="8dp"
         android:text="Calculate"

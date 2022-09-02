@@ -1,16 +1,13 @@
 package com.innova.parcial
 
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Color
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
-import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
-import com.google.android.material.textfield.TextInputLayout
+import android.view.View.*
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
+
+
 
 class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,10 +38,26 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
     }
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
-        val item = parent?.getItemAtPosition(pos).toString()
-
-        when (item) {
-            "Roots" ->
+        var radioGroup = findViewById<RadioGroup>(R.id.radioGroup)
+        var radi = findViewById<RadioButton>(R.id.ra)
+        radi.setTextColor(Color.parseColor("#EB4B29"))
+        when (parent?.getItemAtPosition(pos).toString()) {
+            "Roots" -> {
+                var numRadioButton = radioGroup.childCount - 1
+                for (i in 0..numRadioButton) {
+                    radioGroup.apply {
+                        getChildAt(i).isClickable= false
+//                        getChildAt(1).setTextColor(Color.parseColor("#EB4B29"))
+//                        getChildAt(0).setBackgroundColor(Color.parseColor("#EB4B29"))
+                    }
+                }
+            }
+            "Trigonometric relations" -> {
+//                radioGroup.visibility = INVISIBLE
+            }
+            "Raise" -> {
+//                radioGroup.visibility = INVISIBLE
+            }
         }
     }
 }
