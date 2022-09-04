@@ -1,19 +1,23 @@
 package com.innova.parcial
 
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import android.view.View.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
+import com.innova.parcial.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
         val dropDownMenu = findViewById<AutoCompleteTextView>(R.id.autoCompleteTextView)
+
 //        Leer los valores de dos ángulos A y B, con un menú con las siguientes opciones:
 //
 //       * Mostar las Raíces Cuadradas y cúbicas de ambos ángulos
@@ -38,19 +42,24 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
     }
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
-        val rbSquare = findViewById<RadioButton>(R.id.rbSquare)
-        val rbCubic = findViewById<RadioButton>(R.id.rbCubic)
-        val myRadioButtonList = listOf<RadioButton>(rbSquare, rbCubic)
-
-        when (parent?.getItemAtPosition(pos).toString()) {
-            "Roots" -> {
-                activateRadioButtons(myRadioButtonList)
-            }
-            "Trigonometric relations" -> {
-                disableRadioButtons(myRadioButtonList)
-            }
-            "Raise" -> {
-                disableRadioButtons(myRadioButtonList)
+        binding.apply {
+            val myRadioButtonList = listOf(rbSquare, rbCubic)
+            val myRadioGroupList = listOf(rgRoot, rgTrigonoRelations)
+            when (parent?.getItemAtPosition(pos).toString()) {
+                //root es raiz
+                "Roots" -> {
+                    defineVisibilityToRadioGroup(rgRoot, myRadioGroupList)
+//                rgRaise.isVisible = true
+//                activateRadioButtons(myRadioButtonList)
+                }
+                "Trigonometric relations" -> {
+                    defineVisibilityToRadioGroup(rgTrigonoRelations, myRadioGroupList)
+                    // disableRadioButtons(myRadioButtonList)
+                }
+                "Raise" -> {
+                    defineVisibilityToRadioGroup(null, myRadioGroupList)
+//                disableRadioButtons(myRadioButtonList)
+                }
             }
         }
     }
@@ -58,6 +67,15 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
     private fun activateRadioButtons(radioButtonList: List<RadioButton>) {
         radioButtonList.map {
             it.activate(getColor(R.color.activate_button), getColor(R.color.activate_text))
+        }
+    }
+
+    private fun defineVisibilityToRadioGroup(
+        rgToSetVisible: RadioGroup?,
+        rgList: List<RadioGroup>
+    ) {
+        rgList.map {
+            it.visibility = if (it.id == rgToSetVisible?.id) View.VISIBLE else View.INVISIBLE
         }
     }
 

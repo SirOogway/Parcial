@@ -62,31 +62,66 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <RadioGroup
-        android:id="@+id/radioGroup"
+        android:id="@+id/rgRoot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/menu"
         android:layout_alignEnd="@+id/menu"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:visibility="invisible">
 
         <RadioButton
             android:id="@+id/rbSquare"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Square"/>
+            android:text="Square" />
 
         <RadioButton
             android:id="@+id/rbCubic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cubic"/>
+            android:text="Cubic" />
+    </RadioGroup>
+
+    <RadioGroup
+        android:id="@+id/rgTrigonoRelations"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/menu"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal"
+        android:visibility="invisible">
+
+        <RadioButton
+            android:id="@+id/rbSine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sine" />
+
+        <RadioButton
+            android:id="@+id/rbCosine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cosine" />
+
+        <RadioButton
+            android:id="@+id/rbTangent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tangent" />
+
+        <RadioButton
+            android:id="@+id/rbCotangent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cotangent" />
     </RadioGroup>
 
     <Button
         android:id="@+id/btnCalculate"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/radioGroup"
+        android:layout_below="@id/rgTrigonoRelations"
         android:layout_centerHorizontal="true"
         android:layout_margin="8dp"
         android:text="Calculate"
