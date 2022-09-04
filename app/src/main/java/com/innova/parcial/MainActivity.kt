@@ -2,10 +2,14 @@ package com.innova.parcial
 
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.text.InputType
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
+import androidx.core.widget.doBeforeTextChanged
+import androidx.core.widget.doOnTextChanged
 import com.innova.parcial.databinding.ActivityMainBinding
 
 
@@ -16,8 +20,14 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        val dropDownMenu = findViewById<AutoCompleteTextView>(R.id.autoCompleteTextView)
 
+        val operations = resources.getStringArray(R.array.operations)
+        val adapter = ArrayAdapter(this, R.layout.list_item, operations)
+        binding.dropDownMenu.apply {
+            setAdapter(adapter)
+            onItemClickListener = this@MainActivity
+            inputType = InputType.TYPE_NULL
+        }
 //        Leer los valores de dos ángulos A y B, con un menú con las siguientes opciones:
 //
 //       * Mostar las Raíces Cuadradas y cúbicas de ambos ángulos
@@ -33,40 +43,51 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
 //
 //        Carpeta de proyecto comprimida
 //                Informe de app (Documento en word describe el funcionamiento con pantallazos)
+        binding.apply {
+            val myRadioButtonList =
+                listOf(rbSquare, rbCubic, rbSine, rbCosine, rbTangent, rbCotangent)
+            var firstValidation = false
+            var secondValidation = false
 
-        val operations = resources.getStringArray(R.array.operations)
-        val adapter = ArrayAdapter(this, R.layout.list_item, operations)
-        dropDownMenu.setAdapter(adapter)
+            disableRadioButtons(myRadioButtonList)
 
-        dropDownMenu.onItemClickListener = this
+            etAngleA.doAfterTextChanged {
+                firstValidation = etAngleA.text.toString() != ""
+                if (!firstValidation || !secondValidation) disableRadioButtons(myRadioButtonList)
+                else activateRadioButtons(myRadioButtonList)
+            }
+
+            etAngleB.doAfterTextChanged {
+                secondValidation = etAngleB.text.toString() != ""
+                if (!firstValidation || !secondValidation) disableRadioButtons(myRadioButtonList)
+                else activateRadioButtons(myRadioButtonList)
+            }
+        }
+
+        binding.apply {
+            btnCalculate.setOnClickListener {
+
+                //LOGICAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+            }
+        }
     }
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
         binding.apply {
-            val myRadioButtonList = listOf(rbSquare, rbCubic)
+
             val myRadioGroupList = listOf(rgRoot, rgTrigonoRelations)
             when (parent?.getItemAtPosition(pos).toString()) {
                 //root es raiz
                 "Roots" -> {
                     defineVisibilityToRadioGroup(rgRoot, myRadioGroupList)
-//                rgRaise.isVisible = true
-//                activateRadioButtons(myRadioButtonList)
                 }
                 "Trigonometric relations" -> {
                     defineVisibilityToRadioGroup(rgTrigonoRelations, myRadioGroupList)
-                    // disableRadioButtons(myRadioButtonList)
                 }
                 "Raise" -> {
                     defineVisibilityToRadioGroup(null, myRadioGroupList)
-//                disableRadioButtons(myRadioButtonList)
                 }
             }
-        }
-    }
-
-    private fun activateRadioButtons(radioButtonList: List<RadioButton>) {
-        radioButtonList.map {
-            it.activate(getColor(R.color.activate_button), getColor(R.color.activate_text))
         }
     }
 
@@ -79,14 +100,20 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
         }
     }
 
+    private fun activateRadioButtons(radioButtonList: List<RadioButton>) {
+        radioButtonList.map {
+            it.activate(getColor(R.color.activate_button), getColor(R.color.activate_text))
+        }
+    }
+
     private fun disableRadioButtons(radioButtonList: List<RadioButton>) {
         radioButtonList.map {
-            it.isChecked = false
+//            it.isChecked = false
             it.disable(getColor(R.color.disable))
         }
     }
 
-    //    Funciones de extendisón RADIO BUTTON
+    //    Funciones de extención RADIO BUTTON
     fun RadioButton.disable(colorDisable: Int) {
         this.isClickable = false
         this.buttonTintList = ColorStateList.valueOf(colorDisable)
