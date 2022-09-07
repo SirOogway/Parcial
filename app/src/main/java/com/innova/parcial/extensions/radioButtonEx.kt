@@ -1,4 +1,4 @@
-package com.innova.parcial
+package com.innova.parcial.extensions
 
 import android.content.res.ColorStateList
 import android.widget.RadioButton

@@ -1,6 +1,5 @@
 package com.innova.parcial
 
-import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -8,8 +7,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
 import com.innova.parcial.databinding.ActivityMainBinding
-import com.innova.parcial.extensions.roundDecimals
-import com.innova.parcial.extensions.toFraction
+import com.innova.parcial.extensions.*
 import java.lang.Exception
 import java.lang.Math.*
 import kotlin.math.cos
