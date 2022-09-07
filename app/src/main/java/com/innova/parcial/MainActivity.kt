@@ -2,16 +2,14 @@ package com.innova.parcial
 
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.text.InputType
 import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
-import androidx.core.widget.doBeforeTextChanged
-import androidx.core.widget.doOnTextChanged
 import com.innova.parcial.databinding.ActivityMainBinding
+import com.innova.parcial.extensions.roundDecimals
+import com.innova.parcial.extensions.toFraction
 import java.lang.Exception
 import java.lang.Math.*
 import kotlin.math.cos
@@ -33,23 +31,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
         binding.dropDownMenu.apply {
             setAdapter(adapter)
             onItemClickListener = this@MainActivity
-            inputType = InputType.TYPE_NULL
         }
-//        Leer los valores de dos ángulos A y B, con un menú con las siguientes opciones:
-//
-//       * Mostar las Raíces Cuadradas y cúbicas de ambos ángulos :D
-//       * Mostrar los valores de las funciones Seno, Coseno, Tangente y Cotangente :D
-//       * Mostrar  A elevado a la  B :D
-//                Todos los valores de repuesta debe ser presentados como números quebrados, por ejemplo 0.5 debe mostrarse como 1/2  y 3,141592 como 333/106
-//
-//        La tolerancia, es decir la diferencia absoluta entre 3.141592 y 333/106 debe ser como mínima de 0.01
-//
-//        Nota: Probar códigos https://replit.com/
-//
-//        Entregar:
-//
-//        Carpeta de proyecto comprimida
-//                Informe de app (Documento en word describe el funcionamiento con pantallazos)
+
         binding.apply {
             val myRadioButtonList =
                 listOf(rbSquare, rbCubic, rbSine, rbCosine, rbTangent, rbCotangent)
@@ -84,6 +67,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
             when (parent?.getItemAtPosition(pos).toString()) {
                 //root es raiz
                 "Roots" -> {
+                    tvRaiseContent.text = null
                     defineVisibilityToRadioGroup(rgRoot, myRadioGroupList)
                     btnCalculate.setOnClickListener {
                         try {
@@ -91,16 +75,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
                             val angleB: Double = etAngleB.text.toString().toDouble()
 
                             tvResult.text = when {
-                                rbSquare.isChecked -> "Root A: ${sqrt(angleA)} \nRoot B: ${
-                                    sqrt(
-                                        angleB
-                                    )
-                                }"
-                                rbCubic.isChecked -> "Root A: ${cbrt(angleA)} \nRoot B: ${
-                                    cbrt(
-                                        angleB
-                                    )
-                                }"
+                                rbSquare.isChecked -> "Root A: ${sqrt(angleA).roundDecimals()}\n${sqrt(angleA).roundDecimals().toFraction()}\nRoot B: ${sqrt(angleB).roundDecimals()}\n${sqrt(angleB).roundDecimals().toFraction()}"
+                                rbCubic.isChecked -> "Root A: ${cbrt(angleA).roundDecimals()}\n${cbrt(angleA).roundDecimals().toFraction()}\nRoot B: ${cbrt(angleB.roundDecimals()).roundDecimals()}\n${cbrt(angleB.roundDecimals()).roundDecimals().toFraction()}"
                                 else -> {
                                     Toast.makeText(
                                         this@MainActivity,
@@ -111,11 +87,13 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
                                     ""
                                 }
                             }
+
                         } catch (e: Exception) {
                         }
                     }
                 }
                 "Trigonometric relations" -> {
+                    tvRaiseContent.text = null
                     defineVisibilityToRadioGroup(rgTrigonoRelations, myRadioGroupList)
                     btnCalculate.setOnClickListener {
                         try {
@@ -123,18 +101,10 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
                             val angleB: Double = etAngleB.text.toString().toDouble()
 
                             tvResult.text = when {
-                                rbSine.isChecked -> "Sine A: ${sin(angleA)} \nSine B ${sin(angleB)}"
-                                rbCosine.isChecked -> "Cosine A: ${cos(angleA)} \nCosine B ${
-                                    cos(
-                                        angleB
-                                    )
-                                }"
-                                rbTangent.isChecked -> "Tangent A: ${kotlin.math.tan(angleA)} \nTangent B: ${
-                                    kotlin.math.tan(angleB)
-                                }"
-                                rbCotangent.isChecked -> "Cotangent A: ${cos(angleA) / sin(angleA)} \nCotangent B: ${
-                                    cos(angleB) / sin(angleB)
-                                }"
+                                rbSine.isChecked -> "Sine A: ${sin(angleA).roundDecimals()}\n${sin(angleA).roundDecimals().toFraction()} \nSine B ${sin(angleB).roundDecimals()}\n${sin(angleB).roundDecimals().toFraction()}"
+                                rbCosine.isChecked -> "Cosine A: ${cos(angleA).roundDecimals()}\n${cos(angleA).roundDecimals().toFraction()}\nCosine B ${cos(angleB).roundDecimals()}\n${cos(angleB).roundDecimals().toFraction()}"
+                                rbTangent.isChecked -> "Tangent A: ${kotlin.math.tan(angleA).roundDecimals()}\n${kotlin.math.tan(angleA).roundDecimals().toFraction()}\nTangent B: ${kotlin.math.tan(angleB).roundDecimals()}\n${kotlin.math.tan(angleB).roundDecimals().toFraction()}"
+                                rbCotangent.isChecked -> "Cotangent A: ${(cos(angleA) / sin(angleA)).roundDecimals()}\n ${(cos(angleA) / sin(angleA)).roundDecimals().toFraction()}\nCotangent B: ${(cos(angleB) / sin(angleB)).roundDecimals()}\n ${(cos(angleB) / sin(angleB)).roundDecimals().toFraction()}"
                                 else -> {
                                     Toast.makeText(
                                         this@MainActivity,
@@ -149,14 +119,16 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
                         }
                     }
                 }
-                "Raise" -> {
+                "Pow" -> {
                     defineVisibilityToRadioGroup(null, myRadioGroupList)
                     btnCalculate.setOnClickListener {
                         try {
                             val angleA: Double = etAngleA.text.toString().toDouble()
                             val angleB: Double = etAngleB.text.toString().toDouble()
 
-                            tvResult.text = angleA.pow(angleB).toString()
+                            tvRaiseContent.text = "${angleA} ^ ${angleB}"
+
+                            tvResult.text = "${angleA.pow(angleB).roundDecimals()}\n${angleA.pow(angleB).roundDecimals().toFraction()}"
                         } catch (e: NumberFormatException) {
                             Log.d("Error", "Este es mi error${e}")
                         }
@@ -168,7 +140,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
 
     private fun defineVisibilityToRadioGroup(
         rgToSetVisible: RadioGroup?,
-        rgList: List<RadioGroup>
+        rgList: List<RadioGroup>,
     ) {
         rgList.map {
             it.visibility = if (it.id == rgToSetVisible?.id) View.VISIBLE else View.INVISIBLE
