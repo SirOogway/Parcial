@@ -75,8 +75,16 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
                             val angleB: Double = etAngleB.text.toString().toDouble()
 
                             tvResult.text = when {
-                                rbSquare.isChecked -> "Root A: ${sqrt(angleA).roundDecimals()}\n${sqrt(angleA).roundDecimals().toFraction()}\nRoot B: ${sqrt(angleB).roundDecimals()}\n${sqrt(angleB).roundDecimals().toFraction()}"
-                                rbCubic.isChecked -> "Root A: ${cbrt(angleA).roundDecimals()}\n${cbrt(angleA).roundDecimals().toFraction()}\nRoot B: ${cbrt(angleB.roundDecimals()).roundDecimals()}\n${cbrt(angleB.roundDecimals()).roundDecimals().toFraction()}"
+                                rbSquare.isChecked -> "Root A: ${sqrt(angleA).roundDecimals()}\n${
+                                    sqrt(angleA).roundDecimals().toFraction()
+                                }\nRoot B: ${sqrt(angleB).roundDecimals()}\n${
+                                    sqrt(angleB).roundDecimals().toFraction()
+                                }"
+                                rbCubic.isChecked -> "Root A: ${cbrt(angleA).roundDecimals()}\n${
+                                    cbrt(angleA).roundDecimals().toFraction()
+                                }\nRoot B: ${cbrt(angleB.roundDecimals()).roundDecimals()}\n${
+                                    cbrt(angleB.roundDecimals()).roundDecimals().toFraction()
+                                }"
                                 else -> {
                                     Toast.makeText(
                                         this@MainActivity,
@@ -101,10 +109,28 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
                             val angleB: Double = etAngleB.text.toString().toDouble()
 
                             tvResult.text = when {
-                                rbSine.isChecked -> "Sine A: ${sin(angleA).roundDecimals()}\n${sin(angleA).roundDecimals().toFraction()} \nSine B ${sin(angleB).roundDecimals()}\n${sin(angleB).roundDecimals().toFraction()}"
-                                rbCosine.isChecked -> "Cosine A: ${cos(angleA).roundDecimals()}\n${cos(angleA).roundDecimals().toFraction()}\nCosine B ${cos(angleB).roundDecimals()}\n${cos(angleB).roundDecimals().toFraction()}"
-                                rbTangent.isChecked -> "Tangent A: ${kotlin.math.tan(angleA).roundDecimals()}\n${kotlin.math.tan(angleA).roundDecimals().toFraction()}\nTangent B: ${kotlin.math.tan(angleB).roundDecimals()}\n${kotlin.math.tan(angleB).roundDecimals().toFraction()}"
-                                rbCotangent.isChecked -> "Cotangent A: ${(cos(angleA) / sin(angleA)).roundDecimals()}\n ${(cos(angleA) / sin(angleA)).roundDecimals().toFraction()}\nCotangent B: ${(cos(angleB) / sin(angleB)).roundDecimals()}\n ${(cos(angleB) / sin(angleB)).roundDecimals().toFraction()}"
+                                rbSine.isChecked -> "Sine A: ${sin(angleA).roundDecimals()}\n${
+                                    sin(angleA).roundDecimals().toFraction()
+                                } \nSine B ${sin(angleB).roundDecimals()}\n${
+                                    sin(angleB).roundDecimals().toFraction()
+                                }"
+                                rbCosine.isChecked -> "Cosine A: ${cos(angleA).roundDecimals()}\n${
+                                    cos(angleA).roundDecimals().toFraction()
+                                }\nCosine B ${cos(angleB).roundDecimals()}\n${
+                                    cos(angleB).roundDecimals().toFraction()
+                                }"
+                                rbTangent.isChecked -> "Tangent A: ${
+                                    kotlin.math.tan(angleA).roundDecimals()
+                                }\n${
+                                    kotlin.math.tan(angleA).roundDecimals().toFraction()
+                                }\nTangent B: ${
+                                    kotlin.math.tan(angleB).roundDecimals()
+                                }\n${kotlin.math.tan(angleB).roundDecimals().toFraction()}"
+                                rbCotangent.isChecked -> "Cotangent A: ${(cos(angleA) / sin(angleA)).roundDecimals()}\n ${
+                                    (cos(angleA) / sin(angleA)).roundDecimals().toFraction()
+                                }\nCotangent B: ${(cos(angleB) / sin(angleB)).roundDecimals()}\n ${
+                                    (cos(angleB) / sin(angleB)).roundDecimals().toFraction()
+                                }"
                                 else -> {
                                     Toast.makeText(
                                         this@MainActivity,
@@ -128,7 +154,9 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
 
                             tvRaiseContent.text = "${angleA} ^ ${angleB}"
 
-                            tvResult.text = "${angleA.pow(angleB).roundDecimals()}\n${angleA.pow(angleB).roundDecimals().toFraction()}"
+                            tvResult.text = "${angleA.pow(angleB).roundDecimals()}\n${
+                                angleA.pow(angleB).roundDecimals().toFraction()
+                            }"
                         } catch (e: NumberFormatException) {
                             Log.d("Error", "Este es mi error${e}")
                         }
@@ -158,18 +186,5 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
 //            it.isChecked = false
             it.disable(getColor(R.color.disable))
         }
-    }
-
-    //    Funciones de extención RADIO BUTTON
-    fun RadioButton.disable(colorDisable: Int) {
-        this.isClickable = false
-        this.buttonTintList = ColorStateList.valueOf(colorDisable)
-        this.setTextColor(colorDisable)
-    }
-
-    fun RadioButton.activate(colorButton: Int, colorText: Int) {
-        this.isClickable = true
-        this.buttonTintList = ColorStateList.valueOf(colorButton)
-        this.setTextColor(colorText)
     }
 }
